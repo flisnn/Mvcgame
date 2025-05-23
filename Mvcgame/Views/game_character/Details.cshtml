@@ -4,10 +4,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Детали</h1>
 
 <div>
-    <h4>game_character</h4>
+    <h4>игровой персонаж</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -29,26 +29,26 @@
             @Html.DisplayFor(model => model.HP)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.armor_ID)
+            @Html.DisplayNameFor(model => model.Armors)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.armor_ID)
+            @Html.DisplayFor(model => model.Armors.ID)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.weapon_ID)
+            @Html.DisplayNameFor(model => model.Weapons)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.weapon_ID)
+            @Html.DisplayFor(model => model.Weapons.ID)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.potions_ID)
+            @Html.DisplayNameFor(model => model.Potions)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.potions_ID)
+            @Html.DisplayFor(model => model.Potions.ID)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.ID">Редактироовать</a> |
+    <a asp-action="Index">Вернуться к списку</a>
 </div>

@@ -22,7 +22,8 @@ namespace Mvcgame.Controllers
         // GET: game_character
         public async Task<IActionResult> Index()
         {
-            return View(await _context.game_character.ToListAsync());
+            var applicationDbContext = _context.game_character.Include(g => g.Armors).Include(g => g.Potions).Include(g => g.Weapons);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: game_character/Details/5
@@ -34,6 +35,9 @@ namespace Mvcgame.Controllers
             }
 
             var game_character = await _context.game_character
+                .Include(g => g.Armors)
+                .Include(g => g.Potions)
+                .Include(g => g.Weapons)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (game_character == null)
             {
@@ -46,6 +50,9 @@ namespace Mvcgame.Controllers
         // GET: game_character/Create
         public IActionResult Create()
         {
+            ViewData["ArmorsID"] = new SelectList(_context.Armors, "ID", "ID");
+            ViewData["PotionsID"] = new SelectList(_context.Potions, "ID", "ID");
+            ViewData["WeaponsID"] = new SelectList(_context.Weapons, "ID", "ID");
             return View();
         }
 
@@ -54,7 +61,7 @@ namespace Mvcgame.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,nickname,max_HP,HP,armor_ID,weapon_ID,potions_ID")] game_character game_character)
+        public async Task<IActionResult> Create([Bind("ID,nickname,max_HP,HP,ArmorsID,WeaponsID,PotionsID")] game_character game_character)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +69,9 @@ namespace Mvcgame.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ArmorsID"] = new SelectList(_context.Armors, "ID", "ID", game_character.ArmorsID);
+            ViewData["PotionsID"] = new SelectList(_context.Potions, "ID", "ID", game_character.PotionsID);
+            ViewData["WeaponsID"] = new SelectList(_context.Weapons, "ID", "ID", game_character.WeaponsID);
             return View(game_character);
         }
 
@@ -78,6 +88,9 @@ namespace Mvcgame.Controllers
             {
                 return NotFound();
             }
+            ViewData["ArmorsID"] = new SelectList(_context.Armors, "ID", "ID", game_character.ArmorsID);
+            ViewData["PotionsID"] = new SelectList(_context.Potions, "ID", "ID", game_character.PotionsID);
+            ViewData["WeaponsID"] = new SelectList(_context.Weapons, "ID", "ID", game_character.WeaponsID);
             return View(game_character);
         }
 
@@ -86,7 +99,7 @@ namespace Mvcgame.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,nickname,max_HP,HP,armor_ID,weapon_ID,potions_ID")] game_character game_character)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,nickname,max_HP,HP,ArmorsID,WeaponsID,PotionsID")] game_character game_character)
         {
             if (id != game_character.ID)
             {
@@ -113,6 +126,9 @@ namespace Mvcgame.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ArmorsID"] = new SelectList(_context.Armors, "ID", "ID", game_character.ArmorsID);
+            ViewData["PotionsID"] = new SelectList(_context.Potions, "ID", "ID", game_character.PotionsID);
+            ViewData["WeaponsID"] = new SelectList(_context.Weapons, "ID", "ID", game_character.WeaponsID);
             return View(game_character);
         }
 
@@ -125,6 +141,9 @@ namespace Mvcgame.Controllers
             }
 
             var game_character = await _context.game_character
+                .Include(g => g.Armors)
+                .Include(g => g.Potions)
+                .Include(g => g.Weapons)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (game_character == null)
             {
